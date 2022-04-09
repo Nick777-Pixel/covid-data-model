@@ -9,10 +9,12 @@ name: Build & Publish API snapshot to data.covidactnow.org
 #######################################################################################
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       sentry_environment:
         description: 'Sentry environment of build. Should be "production" on main build and "staging" for other branches.'
+        default: "staging"
         required: true
       pyseir_snapshot:
         description: 'Optionally download an existing pyseir model artifact from a previous snapshot number instead of generating a new one.'
@@ -39,7 +41,7 @@ env:
   SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
   # Sets the sentry environment, controlling how alerts are reported.
-  SENTRY_ENVIRONMENT: ${{ github.event.inputs.sentry_environment }}
+  SENTRY_ENVIRONMENT: ${{ github.event.inputs.sentry_environment || "staging" }}
 
   # use a webhook to write to slack channel dev-alerts for QA
   SLACK_DEV_ALERTS_WEBHOOK: ${{ secrets.SLACK_DEV_ALERTS_WEBHOOK }}
@@ -52,7 +54,7 @@ env:
 
 jobs:
   build-and-publish-snapshot:
-    runs-on: self-hosted
+    runs-on: michael-testing
     steps:
     - name: Parse covid data model branch name and set env variable
       run: |
