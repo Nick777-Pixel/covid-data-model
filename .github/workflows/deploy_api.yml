@@ -82,6 +82,9 @@ jobs:
           ${{ runner.os }}-pip-
           ${{ runner.os }}-
 
+    - run: pip install numpy==1.21.4
+      working-directory: ./covid-data-model
+
     - name: Install Dependencies
       working-directory: ./covid-data-model
       run: pip install -r requirements.txt
