@@ -50,7 +50,7 @@ env:
   OPENBLAS_NUM_THREADS: 1
 
   # Optional Snapshot number to use pyseir model output from. An empty string by default
-  PYSEIR_ARTIFACT_SNAPSHOT: ${{ github.event.inputs.pyseir_snapshot }}
+  PYSEIR_ARTIFACT_SNAPSHOT: 3197
 
 jobs:
   build-and-publish-snapshot:
